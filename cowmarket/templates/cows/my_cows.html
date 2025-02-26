@@ -1,0 +1,12 @@
+{% for cow in cows %}
+    <li>
+        {% if cow.image %}
+            <img src="{{ cow.image.url }}" alt="รูปของ {{ cow.name }}" width="150">
+        {% else %}
+            <p>❌ ไม่มีรูปภาพ</p>
+        {% endif %}
+        <strong>{{ cow.name }}</strong> - {{ cow.breed }} - {{ cow.age }} ปี - ฿{{ cow.price }}
+        <a href="{% url 'cow_update' cow.pk %}">🖊️ แก้ไข</a>
+        <a href="{% url 'cow_delete' cow.pk %}">🗑️ ลบ</a>
+    </li>
+{% endfor %}

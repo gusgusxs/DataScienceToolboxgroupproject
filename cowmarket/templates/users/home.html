@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Main Page{% endblock %}
+
+{% block content %}
+<h2>ยินดีต้อนรับ {{ user.username }}!</h2>
+<p>อีเมลของคุณ: {{ user.email }}</p>
+<p>เข้าสู่ระบบครั้งล่าสุด: {{ user.last_login }}</p>
+
+<h3>🐄 ระบบจัดการลูกวัว</h3>
+<ul>
+    <li><a href="{% url 'cow_list' %}">📋 ดูรายการลูกวัว</a></li>
+    <li><a href="{% url 'cow_create' %}">➕ เพิ่มลูกวัว</a></li>
+</ul>
+
+<a href="{% url 'account_logout' %}">Logout</a>
+{% endblock %}

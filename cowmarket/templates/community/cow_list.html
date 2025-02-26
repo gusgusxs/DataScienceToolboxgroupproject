@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %} คอมมูนิตี้ลูกวัว {% endblock %}
+
+{% block content %}
+<h2>🐮 คอมมูนิตี้ลูกวัว</h2>
+
+<div class="container">
+    <div class="row">
+        {% for cow in cows %}
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{{ cow.image.url }}" class="card-img-top" alt="{{ cow.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ cow.name }}</h5>
+                    <p class="card-text">พันธุ์: {{ cow.breed }}</p>
+                    <p class="card-text">อายุ: {{ cow.age }} ปี</p>
+                    <a href="{% url 'cow_detail' cow.id %}" class="btn btn-primary">ดูรายละเอียด</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>ยังไม่มีลูกวัวในคอมมูนิตี้</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

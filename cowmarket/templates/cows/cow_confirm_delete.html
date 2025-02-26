@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>🗑️ ลบลูกวัว {{ cow.name }}?</h2>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">✅ ยืนยัน</button>
+</form>
+<a href="{% url 'cow_list' %}">⬅️ ยกเลิก</a>
+{% endblock %}

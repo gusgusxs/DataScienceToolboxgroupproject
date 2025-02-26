@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %} รายละเอียดลูกวัว {% endblock %}
+
+{% block content %}
+<h2>{{ cow.name }}</h2>
+<img src="{{ cow.image.url }}" alt="{{ cow.name }}" width="300">
+<p>🐮 พันธุ์: {{ cow.breed }}</p>
+<p>📅 อายุ: {{ cow.age }} ปี</p>
+<p>⚖️ น้ำหนัก: {{ cow.weight }} กิโลกรัม</p>
+<p>💰 ราคา: ฿{{ cow.price }}</p>
+
+<a href="{% url 'community' %}" class="btn btn-secondary">🔙 กลับไปหน้าคอมมูนิตี้</a>
+{% endblock %}

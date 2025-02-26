@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>{% if form.instance.pk %}แก้ไขลูกวัว{% else %}เพิ่มลูกวัว{% endif %}</h2>
+<form method="POST" enctype="multipart/form-data">  <!-- ✅ ต้องมี enctype="multipart/form-data" -->
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">บันทึก</button>
+</form>
+<a href="{% url 'cow_list' %}">⬅️ กลับ</a>
+{% endblock %}
