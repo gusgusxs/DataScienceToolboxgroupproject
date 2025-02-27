@@ -122,3 +122,9 @@ def notifications_view(request):
     notifications.update(is_read=True)
 
     return render(request, "cows/notifications.html", {"notifications": notifications})
+
+@login_required
+def my_purchases(request):
+    # ดึงรายการวัวที่ผู้ใช้ซื้อและถูกยืนยันแล้ว
+    cows = Cow.objects.filter(buyer=request.user, transaction_status="sold")
+    return render(request, "cows/my_purchases.html", {"cows": cows})

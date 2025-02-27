@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}📩 ข้อความที่ได้รับ{% endblock %}
+
+{% block content %}
+<h1>📩 กล่องข้อความ</h1>
+
+{% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li>
+            <strong>จาก: {{ message.sender.username }}</strong> <br>
+            <p>{{ message.message }}</p>
+            <small>⏳ {{ message.timestamp }}</small>
+            <br>
+            <a href="{% url 'chat' message.sender.id %}" class="btn btn-primary">💬 ตอบกลับ</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>ไม่มีข้อความใหม่</p>
+{% endif %}
+{% endblock %}

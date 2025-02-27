@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
+{% block title %}👤 โปรไฟล์ของ {{ user.username }}{% endblock %}
+
 {% block content %}
-<h2>👤 โปรไฟล์ของฉัน</h2>
+<h2>👤 โปรไฟล์ของ {{ user.username }}</h2>
 <p><strong>ชื่อผู้ใช้:</strong> {{ user.username }}</p>
 <p><strong>อีเมล:</strong> {{ user.email }}</p>
-<p><strong>เบอร์โทร:</strong> {{ user.userprofile.phone_number|default:"-" }}</p>
-<p><strong>ที่อยู่:</strong> {{ user.userprofile.location|default:"-" }}</p>
+<p><strong>เบอร์โทร:</strong> {{ user.userprofile.phone_number|default:"❌ ไม่มีข้อมูล" }}</p>
+<p><strong>ที่อยู่:</strong> {{ user.userprofile.location|default:"❌ ไม่มีข้อมูล" }}</p>
 <p><strong>Facebook:</strong> 
     {% if user.userprofile.facebook %}
         <a href="{{ user.userprofile.facebook }}" target="_blank">🌍 เปิดลิงก์</a>
@@ -13,7 +15,13 @@
         ❌ ไม่มีข้อมูล
     {% endif %}
 </p>
-<p><strong>Line ID:</strong> {{ user.userprofile.line_id|default:"-" }}</p>
+<p><strong>Line ID:</strong> {{ user.userprofile.line_id|default:"❌ ไม่มีข้อมูล" }}</p>
 
-<a href="{% url 'edit_profile' %}" class="btn btn-warning">⚙️ แก้ไขโปรไฟล์</a>
+<!-- ปุ่มแชท: แสดงเฉพาะถ้าผู้ใช้อื่นเข้ามาดูโปรไฟล์นี้ -->
+{% if user != request.user %}
+    <a href="{% url 'chat' user.id %}" class="btn btn-primary">💬 แชทกับ {{ user.username }}</a>
+{% else %}
+    <a href="{% url 'edit_profile' %}" class="btn btn-warning">⚙️ แก้ไขโปรไฟล์</a>
+{% endif %}
+
 {% endblock %}

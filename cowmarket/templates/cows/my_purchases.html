@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}🐄 วัวที่ฉันซื้อมา{% endblock %}
+
+{% block content %}
+<h1>📋 รายการวัวที่ฉันซื้อมา</h1>
+
+{% if cows %}
+    <ul>
+        {% for cow in cows %}
+        <li>
+            <img src="{{ cow.image.url }}" alt="รูปของ {{ cow.name }}" width="100">
+            <strong>{{ cow.name }}</strong> - {{ cow.breed }} - ฿{{ cow.price }}
+            <p>อายุ: {{ cow.age }} ปี | น้ำหนัก: {{ cow.weight }} กก.</p>
+            <a href="{% url 'cow_detail' cow.id %}" class="btn btn-info">🔍 ดูรายละเอียด</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>❌ คุณยังไม่ได้ซื้อวัวตัวไหนเลย</p>
+{% endif %}
+{% endblock %}

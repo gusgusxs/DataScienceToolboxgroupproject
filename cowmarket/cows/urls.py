@@ -6,6 +6,7 @@ router = DefaultRouter()
 router.register(r"cows", CowViewSet)
 
 urlpatterns = [
+    path("my-purchases/", my_purchases, name="my_purchases"),
     path("buy/<int:cow_id>/", buy_cow, name="buy_cow"),
     path("notifications/", notifications_view, name="notifications"),
     path("", cow_list, name="cow_list"),  # ✅ URL ดูรายการลูกวัว

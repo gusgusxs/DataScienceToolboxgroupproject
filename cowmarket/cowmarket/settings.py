@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     "corsheaders",
 
     # Local apps
+    'chat',
     "users",
     "cows",
 ]
@@ -115,6 +117,19 @@ load_dotenv()
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY")  # Client ID
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET")  # Client Secret
 SOCIAL_AUTH_GOOGLE_REDIRECT_URI = "http://127.0.0.1:8000/users/google/login/callback/"  # ✅ ต้องมีค่านี้
+
+
+ASGI_APPLICATION = 'cowmarket.asgi.application'
+
+# ✅ ตั้งค่า Channel Layer ให้ใช้ Redis
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',  # ใช้ Redis
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],  # ถ้าใช้ Redis local
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

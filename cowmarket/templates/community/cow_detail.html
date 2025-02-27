@@ -1,15 +1,26 @@
-<h3>📞 ติดต่อผู้ขาย</h3>
-<p>เบอร์โทรศัพท์: {{ cow.owner.userprofile.phone_number|default:"ไม่มีข้อมูล" }}</p>
-<p>Facebook: 
-    {% if cow.owner.userprofile.facebook %}
-        <a href="{{ cow.owner.userprofile.facebook }}" target="_blank">{{ cow.owner.userprofile.facebook }}</a>
-    {% else %}
-        ไม่มีข้อมูล
-    {% endif %}
-</p>
-<p>Line ID: {{ cow.owner.userprofile.line_id|default:"ไม่มีข้อมูล" }}</p>
+<!-- ✅ ปุ่มแชท: ป้องกันการคุยกับตัวเอง -->
+{% if cow.owner != request.user %}
+    <a href="{% url 'chat' cow.owner.id %}" class="btn btn-primary">💬 คุยกับผู้ขาย</a>
+{% endif %}
 
-<!-- ป้องกันการซื้อวัวตัวเอง -->
+<h3>📞 ติดต่อผู้ขาย</h3>
+
+<!-- ✅ ตรวจสอบว่าผู้ขายมีโปรไฟล์ -->
+{% if cow.owner.userprofile %}
+    <p>เบอร์โทรศัพท์: {{ cow.owner.userprofile.phone_number|default:"ไม่มีข้อมูล" }}</p>
+    <p>Facebook: 
+        {% if cow.owner.userprofile.facebook %}
+            <a href="{{ cow.owner.userprofile.facebook }}" target="_blank">{{ cow.owner.userprofile.facebook }}</a>
+        {% else %}
+            ไม่มีข้อมูล
+        {% endif %}
+    </p>
+    <p>Line ID: {{ cow.owner.userprofile.line_id|default:"ไม่มีข้อมูล" }}</p>
+{% else %}
+    <p>❌ ไม่มีข้อมูลผู้ขาย</p>
+{% endif %}
+
+<!-- ✅ ป้องกันการซื้อวัวตัวเอง -->
 {% if user.is_authenticated %}
     {% if cow.owner != request.user and cow.transaction_status == "available" %}
         <form method="POST" action="{% url 'buy_cow' cow.id %}">
