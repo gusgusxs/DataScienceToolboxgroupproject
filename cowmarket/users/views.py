@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import FarmProfile
-from .forms import FarmProfileForm
+from .models import UserProfile
+from .forms import UserProfileForm
+from cows.models import Notification
 from django.contrib.auth.decorators import login_required
 
 def login_view(request):
@@ -17,13 +18,27 @@ def main_view(request):
     return render(request, "users/home.html", {"user": user})  
 
 @login_required
-def farm_profile_view(request):
-    farm, created = FarmProfile.objects.get_or_create(user=request.user)
+def edit_profile(request):
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+
     if request.method == "POST":
-        form = FarmProfileForm(request.POST, instance=farm)
+        form = UserProfileForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect("home")  # ✅ หลังจากบันทึกเสร็จให้กลับไปหน้า Main
+            return redirect("profile")
+
     else:
-        form = FarmProfileForm(instance=farm)
-    return render(request, "users/farm_profile.html", {"form": form})
+        form = UserProfileForm(instance=profile)
+
+    return render(request, "users/edit_profile.html", {"form": form})
+
+@login_required
+def profile(request):
+    return render(request, "users/profile.html")
+
+def main_view(request):
+    unread_notifications = 0
+    if request.user.is_authenticated:
+        unread_notifications = Notification.objects.filter(user=request.user, is_read=False).count()
+
+    return render(request, "users/home.html", {"unread_notifications": unread_notifications})

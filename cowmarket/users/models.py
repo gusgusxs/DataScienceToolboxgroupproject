@@ -11,12 +11,12 @@ class CustomUser(AbstractUser):
     user_permissions = models.ManyToManyField(Permission, related_name="customuser_permissions", blank=True)
 
 
-class FarmProfile(models.Model):
+class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # ✅ แก้ตรงนี้
-    farm_name = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=15, blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
-    phone = models.CharField(max_length=20, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+    facebook = models.URLField(blank=True, null=True)
+    line_id = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
-        return self.farm_name
+     return self.user.username

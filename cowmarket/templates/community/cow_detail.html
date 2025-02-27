@@ -1,14 +1,26 @@
-{% extends "base.html" %}
+<h3>📞 ติดต่อผู้ขาย</h3>
+<p>เบอร์โทรศัพท์: {{ cow.owner.userprofile.phone_number|default:"ไม่มีข้อมูล" }}</p>
+<p>Facebook: 
+    {% if cow.owner.userprofile.facebook %}
+        <a href="{{ cow.owner.userprofile.facebook }}" target="_blank">{{ cow.owner.userprofile.facebook }}</a>
+    {% else %}
+        ไม่มีข้อมูล
+    {% endif %}
+</p>
+<p>Line ID: {{ cow.owner.userprofile.line_id|default:"ไม่มีข้อมูล" }}</p>
 
-{% block title %} รายละเอียดลูกวัว {% endblock %}
-
-{% block content %}
-<h2>{{ cow.name }}</h2>
-<img src="{{ cow.image.url }}" alt="{{ cow.name }}" width="300">
-<p>🐮 พันธุ์: {{ cow.breed }}</p>
-<p>📅 อายุ: {{ cow.age }} ปี</p>
-<p>⚖️ น้ำหนัก: {{ cow.weight }} กิโลกรัม</p>
-<p>💰 ราคา: ฿{{ cow.price }}</p>
-
-<a href="{% url 'community' %}" class="btn btn-secondary">🔙 กลับไปหน้าคอมมูนิตี้</a>
-{% endblock %}
+<!-- ป้องกันการซื้อวัวตัวเอง -->
+{% if user.is_authenticated %}
+    {% if cow.owner != request.user and cow.transaction_status == "available" %}
+        <form method="POST" action="{% url 'buy_cow' cow.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">🛒 ซื้อวัวตัวนี้</button>
+        </form>
+    {% elif cow.owner == request.user %}
+        <p class="text-warning">⚠️ คุณเป็นเจ้าของวัวตัวนี้ ไม่สามารถซื้อได้</p>
+    {% else %}
+        <p class="text-muted">⏳ วัวตัวนี้อยู่ระหว่างการซื้อขาย</p>
+    {% endif %}
+{% else %}
+    <p>กรุณา <a href="{% url 'account_login' %}">เข้าสู่ระบบ</a> เพื่อซื้อ</p>
+{% endif %}

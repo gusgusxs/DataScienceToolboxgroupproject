@@ -1,7 +1,8 @@
 from django import forms
-from .models import FarmProfile
+from .models import UserProfile
 
-class FarmProfileForm(forms.ModelForm):
+class UserProfileForm(forms.ModelForm):
     class Meta:
-        model = FarmProfile
-        fields = ["farm_name", "location", "phone", "description"]
+        model = UserProfile
+        fields = ["phone_number", "location", "facebook", "line_id"]
+

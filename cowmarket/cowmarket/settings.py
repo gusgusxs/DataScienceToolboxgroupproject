@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "rest_framework.authtoken",
+    "django.contrib.sites",
     "dj_rest_auth",
     "allauth",
     "allauth.account",
@@ -50,7 +51,6 @@ INSTALLED_APPS = [
     # Local apps
     "users",
     "cows",
-    "sales",
 ]
 
 MIDDLEWARE = [
@@ -90,6 +90,11 @@ SITE_ID = 1  # ✅ ต้องมี
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
+        "APP": {
+            "client_id": os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY"),
+            "secret": os.getenv("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET"),
+            "key": "",
+        },
         "SCOPE": ["profile", "email"],
         "AUTH_PARAMS": {"access_type": "online"},
     }

@@ -15,7 +15,7 @@
                     <h5 class="card-title">{{ cow.name }}</h5>
                     <p class="card-text">พันธุ์: {{ cow.breed }}</p>
                     <p class="card-text">อายุ: {{ cow.age }} ปี</p>
-                    <a href="{% url 'cow_detail' cow.id %}" class="btn btn-primary">ดูรายละเอียด</a>
+                    <a href="{% url 'cow_detail' cow.pk %}" class="btn btn-primary">ดูรายละเอียด</a>
                 </div>
             </div>
         </div>
