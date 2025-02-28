@@ -11,11 +11,12 @@ class CowViewSet(viewsets.ModelViewSet):
     queryset = Cow.objects.all()
     serializer_class = CowSerializer
 
-@login_required
+# ฟังก์ชันสำหรับหน้าคอมมูนิตี้
 def community_view(request):
     cows = Cow.objects.filter(transaction_status="available")
     return render(request, "community/cow_list.html", {"cows": cows})
 
+@login_required
 def cow_detail_view(request, cow_id):
     cow = get_object_or_404(Cow, id=cow_id)
     return render(request, "community/cow_detail.html", {"cow": cow})

@@ -10,8 +10,8 @@
     <header>
         <h1>🐄 ตลาดซื้อขายลูกวัว</h1>
         <nav>
-            <a href="{% url 'cow_list' %}">📋 ดูวัวทั้งหมด</a>
             <a href="{% url 'community' %}">🌍 คอมมูนิตี้ลูกวัว</a>
+            <a href="{% url 'cow_list' %}">📋 ดูวัวทั้งหมด</a>
             <a href="{% url 'my_purchases' %}">📦 วัวที่ฉันซื้อมา</a>
 
             {% if user.is_authenticated %}

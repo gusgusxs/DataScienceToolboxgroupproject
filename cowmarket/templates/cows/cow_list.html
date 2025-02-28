@@ -46,6 +46,11 @@
                         <button type="submit" name="status" value="sold" class="btn btn-success">✅ ซื้อขายสำเร็จ</button>
                         <button type="submit" name="status" value="available" class="btn btn-danger">❌ ซื้อขายไม่สำเร็จ</button>
                     </form>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'cow_detail' cow.id %}">ดูรายละเอียด</a>
+                    {% else %}
+                    <a href="{% url 'account_login' %}">กรุณาเข้าสู่ระบบเพื่อดูรายละเอียด</a>
+                    {% endif %}
                     {% endif %}
                     {% endif %}
                 </div>

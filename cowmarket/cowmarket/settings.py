@@ -121,16 +121,6 @@ SOCIAL_AUTH_GOOGLE_REDIRECT_URI = "http://127.0.0.1:8000/users/google/login/call
 
 ASGI_APPLICATION = 'cowmarket.asgi.application'
 
-# ✅ ตั้งค่า Channel Layer ให้ใช้ Redis
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',  # ใช้ Redis
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],  # ถ้าใช้ Redis local
-        },
-    },
-}
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
