@@ -1,27 +1,40 @@
+<script src="https://cdn.tailwindcss.com"></script>
 {% extends "base.html" %}
 
 {% block title %}👤 โปรไฟล์ของ {{ user.username }}{% endblock %}
 
 {% block content %}
-<h2>👤 โปรไฟล์ของ {{ user.username }}</h2>
-<p><strong>ชื่อผู้ใช้:</strong> {{ user.username }}</p>
-<p><strong>อีเมล:</strong> {{ user.email }}</p>
-<p><strong>เบอร์โทร:</strong> {{ user.userprofile.phone_number|default:"❌ ไม่มีข้อมูล" }}</p>
-<p><strong>ที่อยู่:</strong> {{ user.userprofile.location|default:"❌ ไม่มีข้อมูล" }}</p>
-<p><strong>Facebook:</strong> 
-    {% if user.userprofile.facebook %}
-        <a href="{{ user.userprofile.facebook }}" target="_blank">🌍 เปิดลิงก์</a>
-    {% else %}
-        ❌ ไม่มีข้อมูล
-    {% endif %}
-</p>
-<p><strong>Line ID:</strong> {{ user.userprofile.line_id|default:"❌ ไม่มีข้อมูล" }}</p>
+<div class="max-w-3xl mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
+    <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">👤 โปรไฟล์ของ {{ user.username }}</h2>
 
-<!-- ปุ่มแชท: แสดงเฉพาะถ้าผู้ใช้อื่นเข้ามาดูโปรไฟล์นี้ -->
-{% if user != request.user %}
-    <a href="{% url 'chat' user.id %}" class="btn btn-primary">💬 แชทกับ {{ user.username }}</a>
-{% else %}
-    <a href="{% url 'edit_profile' %}" class="btn btn-warning">⚙️ แก้ไขโปรไฟล์</a>
-{% endif %}
+    <div class="space-y-4 text-lg text-gray-700">
+        <p><strong>ชื่อผู้ใช้:</strong> <span class="font-semibold">{{ user.username }}</span></p>
+        <p><strong>อีเมล:</strong> <span class="font-semibold">{{ user.email }}</span></p>
+        <p><strong>เบอร์โทร:</strong> <span class="font-semibold">{{ user.userprofile.phone_number|default:"❌ ไม่มีข้อมูล" }}</span></p>
+        <p><strong>ที่อยู่:</strong> <span class="font-semibold">{{ user.userprofile.location|default:"❌ ไม่มีข้อมูล" }}</span></p>
+        <p><strong>Facebook:</strong> 
+            {% if user.userprofile.facebook %}
+                <a href="{{ user.userprofile.facebook }}" target="_blank" class="text-blue-500 hover:underline">🌍 เปิดลิงก์</a>
+            {% else %}
+                ❌ ไม่มีข้อมูล
+            {% endif %}
+        </p>
+        <p><strong>Line ID:</strong> <span class="font-semibold">{{ user.userprofile.line_id|default:"❌ ไม่มีข้อมูล" }}</span></p>
+    </div>
 
+    <!-- ปุ่มแชทหรือแก้ไขโปรไฟล์ -->
+    <div class="mt-6 text-center">
+        {% if user != request.user %}
+            <a href="{% url 'chat' user.id %}" 
+               class="bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded-lg font-semibold transition">
+                💬 แชทกับ {{ user.username }}
+            </a>
+        {% else %}
+            <a href="{% url 'edit_profile' %}" 
+               class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-6 rounded-lg font-semibold transition">
+                ⚙️ แก้ไขโปรไฟล์
+            </a>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

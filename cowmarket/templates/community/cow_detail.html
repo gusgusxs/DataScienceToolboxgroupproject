@@ -1,37 +1,43 @@
-<!-- ✅ ปุ่มแชท: ป้องกันการคุยกับตัวเอง -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- ปุ่มแชท: ป้องกันการคุยกับตัวเอง -->
 {% if cow.owner != request.user %}
-    <a href="{% url 'chat' cow.owner.id %}" class="btn btn-primary">💬 คุยกับผู้ขาย</a>
+    <a href="{% url 'chat' cow.owner.id %}" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-6 rounded-lg block text-center mb-4 transition">
+        💬 คุยกับผู้ขาย
+    </a>
 {% endif %}
 
-<h3>📞 ติดต่อผู้ขาย</h3>
+<h3 class="text-2xl font-semibold text-gray-800 mb-4">📞 ติดต่อผู้ขาย</h3>
 
-<!-- ✅ ตรวจสอบว่าผู้ขายมีโปรไฟล์ -->
+<!-- ตรวจสอบว่าผู้ขายมีโปรไฟล์ -->
 {% if cow.owner.userprofile %}
-    <p>เบอร์โทรศัพท์: {{ cow.owner.userprofile.phone_number|default:"ไม่มีข้อมูล" }}</p>
-    <p>Facebook: 
+    <p class="text-lg text-gray-700 mb-2">📱 เบอร์โทรศัพท์: <span class="font-semibold">{{ cow.owner.userprofile.phone_number|default:"ไม่มีข้อมูล" }}</span></p>
+    <p class="text-lg text-gray-700 mb-2">🌍 Facebook: 
         {% if cow.owner.userprofile.facebook %}
-            <a href="{{ cow.owner.userprofile.facebook }}" target="_blank">{{ cow.owner.userprofile.facebook }}</a>
+            <a href="{{ cow.owner.userprofile.facebook }}" target="_blank" class="text-blue-500 hover:underline">{{ cow.owner.userprofile.facebook }}</a>
         {% else %}
             ไม่มีข้อมูล
         {% endif %}
     </p>
-    <p>Line ID: {{ cow.owner.userprofile.line_id|default:"ไม่มีข้อมูล" }}</p>
+    <p class="text-lg text-gray-700 mb-4">💬 Line ID: <span class="font-semibold">{{ cow.owner.userprofile.line_id|default:"ไม่มีข้อมูล" }}</span></p>
 {% else %}
-    <p>❌ ไม่มีข้อมูลผู้ขาย</p>
+    <p class="text-lg text-red-500">❌ ไม่มีข้อมูลผู้ขาย</p>
 {% endif %}
 
-<!-- ✅ ป้องกันการซื้อวัวตัวเอง -->
+<!-- ป้องกันการซื้อวัวตัวเอง -->
 {% if user.is_authenticated %}
     {% if cow.owner != request.user and cow.transaction_status == "available" %}
-        <form method="POST" action="{% url 'buy_cow' cow.id %}">
+        <form method="POST" action="{% url 'buy_cow' cow.id %}" class="mb-6">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary">🛒 ซื้อวัวตัวนี้</button>
+            <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-lg transition">
+                🛒 ซื้อวัวตัวนี้
+            </button>
         </form>
     {% elif cow.owner == request.user %}
-        <p class="text-warning">⚠️ คุณเป็นเจ้าของวัวตัวนี้ ไม่สามารถซื้อได้</p>
+        <p class="text-yellow-600 text-center font-semibold">⚠️ คุณเป็นเจ้าของวัวตัวนี้ ไม่สามารถซื้อได้</p>
     {% else %}
-        <p class="text-muted">⏳ วัวตัวนี้อยู่ระหว่างการซื้อขาย</p>
+        <p class="text-gray-500 text-center">⏳ วัวตัวนี้อยู่ระหว่างการซื้อขาย</p>
     {% endif %}
 {% else %}
-    <p>กรุณา <a href="{% url 'account_login' %}">เข้าสู่ระบบ</a> เพื่อซื้อ</p>
+    <p class="text-center text-gray-700">กรุณา <a href="{% url 'account_login' %}" class="text-blue-500 hover:underline">เข้าสู่ระบบ</a> เพื่อซื้อ</p>
 {% endif %}

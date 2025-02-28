@@ -1,22 +1,34 @@
+<script src="https://cdn.tailwindcss.com"></script>
 {% extends "base.html" %}
 
 {% block title %}🐄 วัวที่ฉันซื้อมา{% endblock %}
 
 {% block content %}
-<h1>📋 รายการวัวที่ฉันซื้อมา</h1>
+<h1 class="text-3xl font-bold text-center text-green-700 mb-6">📋 รายการวัวที่ฉันซื้อมา</h1>
 
 {% if cows %}
-    <ul>
+    <ul class="space-y-6">
         {% for cow in cows %}
-        <li>
-            <img src="{{ cow.image.url }}" alt="รูปของ {{ cow.name }}" width="100">
-            <strong>{{ cow.name }}</strong> - {{ cow.breed }} - ฿{{ cow.price }}
-            <p>อายุ: {{ cow.age }} ปี | น้ำหนัก: {{ cow.weight }} กก.</p>
-            <a href="{% url 'cow_detail' cow.id %}" class="btn btn-info">🔍 ดูรายละเอียด</a>
+        <li class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4">
+            <div class="w-32 h-32 bg-gray-200 rounded-lg overflow-hidden">
+                <img src="{{ cow.image.url }}" alt="รูปของ {{ cow.name }}" class="w-full h-full object-cover">
+            </div>
+            
+            <div class="flex-1">
+                <strong class="text-lg font-semibold text-gray-800">{{ cow.name }}</strong>
+                <p class="text-gray-600">พันธุ์: {{ cow.breed }}</p>
+                <p class="text-gray-600">ราคา: ฿{{ cow.price }}</p>
+                <p class="text-gray-600">อายุ: {{ cow.age }} ปี | น้ำหนัก: {{ cow.weight }} กก.</p>
+            </div>
+
+            <a href="{% url 'cow_detail' cow.id %}" 
+               class="text-blue-500 hover:text-blue-600 transition">
+                🔍 ดูรายละเอียด
+            </a>
         </li>
         {% endfor %}
     </ul>
 {% else %}
-    <p>❌ คุณยังไม่ได้ซื้อวัวตัวไหนเลย</p>
+    <p class="text-center text-gray-500">❌ คุณยังไม่ได้ซื้อวัวตัวไหนเลย</p>
 {% endif %}
 {% endblock %}

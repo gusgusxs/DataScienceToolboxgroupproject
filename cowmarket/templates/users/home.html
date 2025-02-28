@@ -1,17 +1,25 @@
+
 {% extends "base.html" %}
 
 {% block title %}Main Page{% endblock %}
 
 {% block content %}
-<h2>ยินดีต้อนรับ {{ user.username }}!</h2>
-<p>อีเมลของคุณ: {{ user.email }}</p>
-<p>เข้าสู่ระบบครั้งล่าสุด: {{ user.last_login }}</p>
+<div class="max-w-3xl mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
+    <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">🎉 ยินดีต้อนรับ {{ user.username }}!</h2>
 
-<h3>🐄 ระบบจัดการลูกวัว</h3>
-<ul>
-    <li><a href="{% url 'cow_list' %}">📋 ดูรายการลูกวัว</a></li>
-    <li><a href="{% url 'cow_create' %}">➕ เพิ่มลูกวัว</a></li>
-</ul>
+    <div class="text-center text-gray-700 mb-6">
+        <p class="text-lg">📧 อีเมลของคุณ: <span class="font-semibold">{{ user.email }}</span></p>
+        <p class="text-lg">🕒 เข้าสู่ระบบครั้งล่าสุด: <span class="font-semibold">{{ user.last_login }}</span></p>
+    </div>
 
-<a href="{% url 'account_logout' %}">Logout</a>
+    <h3 class="text-2xl font-semibold text-gray-800 text-center mb-4">🐄 ระบบจัดการลูกวัว</h3>
+    <ul class="space-y-4 text-gray-700 text-center">
+        <li><a href="{% url 'cow_list' %}" class="text-blue-500 hover:text-blue-600 transition ">📋 ดูรายการลูกวัว</a></li>
+        <li><a href="{% url 'cow_create' %}" class="text-blue-500 hover:text-blue-600 transition">➕ เพิ่มลูกวัว</a></li>
+    </ul>
+
+    <!-- <div class="mt-6 text-center">
+        <a href="{% url 'account_logout' %}" class="bg-red-500 hover:bg-red-600 text-white py-2 px-6 rounded-lg transition">🚪 Logout</a>
+    </div> -->
+</div>
 {% endblock %}

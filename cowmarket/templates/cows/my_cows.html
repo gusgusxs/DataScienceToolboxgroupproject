@@ -1,12 +1,27 @@
-{% for cow in cows %}
-    <li>
-        {% if cow.image %}
-            <img src="{{ cow.image.url }}" alt="รูปของ {{ cow.name }}" width="150">
-        {% else %}
-            <p>❌ ไม่มีรูปภาพ</p>
-        {% endif %}
-        <strong>{{ cow.name }}</strong> - {{ cow.breed }} - {{ cow.age }} ปี - ฿{{ cow.price }}
-        <a href="{% url 'cow_update' cow.pk %}">🖊️ แก้ไข</a>
-        <a href="{% url 'cow_delete' cow.pk %}">🗑️ ลบ</a>
+<script src="https://cdn.tailwindcss.com"></script>
+<ul class="space-y-6">
+    {% for cow in cows %}
+    <li class="bg-white p-4 shadow-lg rounded-lg flex items-center space-x-4">
+        <div class="w-32 h-32 bg-gray-200 rounded-lg flex items-center justify-center">
+            {% if cow.image %}
+                <img src="{{ cow.image.url }}" alt="รูปของ {{ cow.name }}" class="w-full h-full object-cover rounded-lg">
+            {% else %}
+                <p class="text-gray-500">❌ ไม่มีรูปภาพ</p>
+            {% endif %}
+        </div>
+        
+        <div class="flex-1">
+            <strong class="text-lg font-semibold text-gray-800">{{ cow.name }}</strong>
+            <p class="text-gray-600">พันธุ์: {{ cow.breed }}</p>
+            <p class="text-gray-600">อายุ: {{ cow.age }} ปี</p>
+            <p class="text-xl font-bold text-green-600">฿{{ cow.price }}</p>
+        </div>
+
+        <div class="space-x-3">
+            <a href="{% url 'cow_update' cow.pk %}" class="text-yellow-500 hover:text-yellow-600 transition">🖊️ แก้ไข</a>
+            <a href="{% url 'cow_delete' cow.pk %}" class="text-red-500 hover:text-red-600 transition">🗑️ ลบ</a>
+        </div>
     </li>
-{% endfor %}
+    {% endfor %}
+</ul>
+

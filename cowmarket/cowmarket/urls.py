@@ -29,7 +29,7 @@ urlpatterns = [
     path("cows/", include("cows.urls")),
     path("login/", login_view, name="home"),
     path("", community_view, name="community"),
-    path("login/", login_view, name="login"),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

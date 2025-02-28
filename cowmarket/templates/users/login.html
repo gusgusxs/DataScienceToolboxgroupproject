@@ -1,5 +1,20 @@
+<script src="https://cdn.tailwindcss.com"></script>
 {% block content %}
-<h2>Login</h2>
-<p>กรุณาเข้าสู่ระบบเพื่อใช้งาน</p>
- <a href="/users/google/login/">Login with Google</a> 
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="bg-white shadow-lg rounded-lg p-8 text-center w-96">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">🔑 เข้าสู่ระบบ</h2>
+        <p class="text-gray-500 mb-6">กรุณาเข้าสู่ระบบเพื่อใช้งาน</p>
+
+        <a href="/users/google/login/" 
+           class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 ease-in-out">
+            <svg class="w-5 h-5 mr-2" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#4285F4" d="M24 9.5c3.21 0 6.04 1.14 8.29 3.02l6.15-6.15C34.62 3.1 29.64 1 24 1 14.74 1 6.95 6.68 3.24 14.76l7.52 5.85C12.53 13.95 17.66 9.5 24 9.5Z"/>
+                <path fill="#34A853" d="M46.08 24.5c0-1.57-.14-3.07-.41-4.5H24v9h12.76c-.58 2.96-2.14 5.49-4.41 7.23l6.84 5.3c3.99-3.69 6.89-9.14 6.89-17.03Z"/>
+                <path fill="#FBBC05" d="M10.76 28.6c-1.3-2.3-2.04-4.95-2.04-7.6s.74-5.3 2.04-7.6l-7.52-5.85C1.54 11.7 0 17.1 0 24s1.54 12.3 4.24 16.45l7.52-5.85Z"/>
+                <path fill="#EA4335" d="M24 47c6.48 0 11.91-2.16 15.93-5.92l-6.84-5.3c-2.02 1.44-4.56 2.3-9.09 2.3-6.34 0-11.47-4.45-13.24-10.61l-7.52 5.85C6.95 41.32 14.74 47 24 47Z"/>
+            </svg>
+            Login with Google
+        </a>
+    </div>
+</div>
 {% endblock %}

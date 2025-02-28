@@ -1,65 +1,71 @@
+<script src="https://cdn.tailwindcss.com"></script>
 {% extends "base.html" %}
 
 {% block title %}ตลาดซื้อขายลูกวัว{% endblock %}
 
 {% block content %}
-<h1>🐄 ตลาดซื้อขายลูกวัว</h1>
-<a href="{% url 'cow_create' %}" class="btn btn-primary">➕ เพิ่มลูกวัว</a>
+<h1 class="text-3xl font-bold text-center text-green-700 mb-6">🐄 ตลาดซื้อขายลูกวัว</h1>
+<a href="{% url 'cow_create' %}" class="bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded-lg block mx-auto mb-6 text-center">➕ เพิ่มลูกวัว</a>
 
-<h2>📋 รายการลูกวัว</h2>
-<div class="container">
-    <div class="row">
+<h2 class="text-2xl font-semibold text-gray-800 mb-6">📋 รายการลูกวัว</h2>
+<div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for cow in cows %}
-        <div class="col-md-4">
-            <div class="card">
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <div class="w-full h-48">
                 {% if cow.image %}
-                <img src="{{ cow.image.url }}" alt="รูปของ {{ cow.name }}" class="card-img-top" style="width: 100%; height: 200px; object-fit: cover;">
+                    <img src="{{ cow.image.url }}" alt="รูปของ {{ cow.name }}" class="w-full h-full object-cover">
                 {% else %}
-                <p class="text-muted">❌ ไม่มีรูปภาพ</p>
+                    <div class="w-full h-full bg-gray-300 flex items-center justify-center">
+                        <p class="text-gray-500">❌ ไม่มีรูปภาพ</p>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <div class="p-4">
+                <h5 class="text-lg font-semibold text-gray-800">{{ cow.name }}</h5>
+                <p class="text-gray-600">พันธุ์: {{ cow.breed }}</p>
+                <p class="text-gray-600">อายุ: {{ cow.age }} ปี</p>
+                <p class="text-gray-600">น้ำหนัก: {{ cow.weight }} กก.</p>
+                <p class="text-xl font-bold text-green-600">฿{{ cow.price }}</p>
+
+                <!-- แสดงสถานะการขาย -->
+                {% if cow.transaction_status == "available" %}
+                <p class="bg-green-500 text-white inline-block py-1 px-4 rounded-full text-sm">✅ พร้อมขาย</p>
+                {% elif cow.transaction_status == "pending" %}
+                <p class="bg-yellow-500 text-white inline-block py-1 px-4 rounded-full text-sm">⏳ รอการยืนยัน</p>
+                {% elif cow.transaction_status == "sold" %}
+                <p class="bg-red-500 text-white inline-block py-1 px-4 rounded-full text-sm">❌ ขายแล้ว</p>
                 {% endif %}
 
-                <div class="card-body">
-                    <h5 class="card-title">{{ cow.name }}</h5>
-                    <p class="card-text">พันธุ์: {{ cow.breed }}</p>
-                    <p class="card-text">อายุ: {{ cow.age }} ปี</p>
-                    <p class="card-text">น้ำหนัก: {{ cow.weight }} กก.</p>
-                    <p class="card-text"><strong>฿{{ cow.price }}</strong></p>
-                    
-                    <!-- แสดงสถานะการขาย -->
-                    {% if cow.transaction_status == "available" %}
-                    <p class="badge bg-success">✅ พร้อมขาย</p>
-                    {% elif cow.transaction_status == "pending" %}
-                    <p class="badge bg-warning">⏳ รอการยืนยัน</p>
-                    {% elif cow.transaction_status == "sold" %}
-                    <p class="badge bg-danger">❌ ขายแล้ว</p>
-                    {% endif %}
-
-                    <!-- ปุ่มแสดงเฉพาะเจ้าของวัว -->
-                    {% if request.user == cow.owner %}
-                    <a href="{% url 'cow_update' cow.pk %}" class="btn btn-warning">🖊️ แก้ไข</a>
-                    <a href="{% url 'cow_delete' cow.pk %}" class="btn btn-danger">🗑️ ลบ</a>
-
-                    <!-- ปุ่มยืนยันการขาย -->
-                    {% if cow.transaction_status == "pending" %}
-                    <form method="POST" action="{% url 'confirm_transaction' cow.id %}" class="mt-2">
-                        {% csrf_token %}
-                        <button type="submit" name="status" value="sold" class="btn btn-success">✅ ซื้อขายสำเร็จ</button>
-                        <button type="submit" name="status" value="available" class="btn btn-danger">❌ ซื้อขายไม่สำเร็จ</button>
-                    </form>
-                    {% if user.is_authenticated %}
-                    <a href="{% url 'cow_detail' cow.id %}">ดูรายละเอียด</a>
-                    {% else %}
-                    <a href="{% url 'account_login' %}">กรุณาเข้าสู่ระบบเพื่อดูรายละเอียด</a>
-                    {% endif %}
-                    {% endif %}
-                    {% endif %}
+                <!-- ปุ่มแสดงเฉพาะเจ้าของวัว -->
+                {% if request.user == cow.owner %}
+                <div class="mt-4 flex justify-between space-x-2">
+                    <a href="{% url 'cow_update' cow.pk %}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg transition">🖊️ แก้ไข</a>
+                    <a href="{% url 'cow_delete' cow.pk %}" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg transition">🗑️ ลบ</a>
                 </div>
+
+                <!-- ปุ่มยืนยันการขาย -->
+                {% if cow.transaction_status == "pending" %}
+                <form method="POST" action="{% url 'confirm_transaction' cow.id %}" class="mt-2 space-x-2">
+                    {% csrf_token %}
+                    <button type="submit" name="status" value="sold" class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg transition">✅ ซื้อขายสำเร็จ</button>
+                    <button type="submit" name="status" value="available" class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg transition">❌ ซื้อขายไม่สำเร็จ</button>
+                </form>
+                {% endif %}
+                {% endif %}
+
+                <!-- ปุ่มดูรายละเอียดหรือเข้าสู่ระบบ -->
+                {% if user.is_authenticated %}
+                    <a href="{% url 'cow_detail' cow.id %}" class="text-blue-500 hover:underline mt-4 block">ดูรายละเอียด</a>
+                {% else %}
+                    <a href="{% url 'account_login' %}" class="text-blue-500 hover:underline mt-4 block">กรุณาเข้าสู่ระบบเพื่อดูรายละเอียด</a>
+                {% endif %}
             </div>
         </div>
         {% empty %}
-        <p class="text-muted">ไม่มีลูกวัวที่พร้อมขายในขณะนี้</p>
+        <p class="text-muted text-center w-full">ไม่มีลูกวัวที่พร้อมขายในขณะนี้</p>
         {% endfor %}
     </div>
 </div>
-
 {% endblock %}

@@ -1,11 +1,43 @@
+<script src="https://cdn.tailwindcss.com"></script>
 {% extends "base.html" %}
 
 {% block content %}
-<h2>{% if form.instance.pk %}แก้ไขลูกวัว{% else %}เพิ่มลูกวัว{% endif %}</h2>
-<form method="POST" enctype="multipart/form-data">  <!-- ✅ ต้องมี enctype="multipart/form-data" -->
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">บันทึก</button>
-</form>
-<a href="{% url 'cow_list' %}">⬅️ กลับ</a>
+<div class="max-w-3xl mx-auto my-10 p-6 bg-white shadow-lg rounded-lg">
+    <h2 class="text-3xl font-bold text-gray-800 text-center mb-6">
+        {% if form.instance.pk %}✏️ แก้ไขลูกวัว{% else %}➕ เพิ่มลูกวัว{% endif %}
+    </h2>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-4">
+        {% csrf_token %}
+
+        {% for field in form %}
+        <div class="mb-4">
+            <label for="{{ field.id_for_label }}" class="block text-gray-700 font-semibold mb-1">
+                {{ field.label }}
+            </label>
+            <div class="flex items-center space-x-2">
+                {{ field }}
+            </div>
+            {% if field.help_text %}
+                <p class="text-sm text-gray-500">{{ field.help_text }}</p>
+            {% endif %}
+            {% for error in field.errors %}
+                <p class="text-red-500 text-sm">{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+        <button type="submit" 
+                class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition">
+            💾 บันทึกข้อมูล
+        </button>
+    </form>
+
+    <div class="mt-6 text-center">
+        <a href="{% url 'cow_list' %}" 
+           class="text-gray-600 hover:text-gray-800 font-semibold transition">
+            ⬅️ กลับไปหน้ารายการลูกวัว
+        </a>
+    </div>
+</div>
 {% endblock %}

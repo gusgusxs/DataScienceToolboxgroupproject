@@ -1,26 +1,27 @@
+<script src="https://cdn.tailwindcss.com"></script>
 {% extends "base.html" %}
 
 {% block title %} คอมมูนิตี้ลูกวัว {% endblock %}
 
 {% block content %}
-<h2>🐮 คอมมูนิตี้ลูกวัว</h2>
+<h2 class="text-3xl font-bold text-center text-green-700 mb-6">🐮 คอมมูนิตี้ลูกวัว</h2>
 
-<div class="container">
-    <div class="row">
+<div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for cow in cows %}
-        <div class="col-md-4">
-            <div class="card">
-                <img src="{{ cow.image.url }}" class="card-img-top" alt="{{ cow.name }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ cow.name }}</h5>
-                    <p class="card-text">พันธุ์: {{ cow.breed }}</p>
-                    <p class="card-text">อายุ: {{ cow.age }} ปี</p>
-                    <a href="{% url 'cow_detail' cow.pk %}" class="btn btn-primary">ดูรายละเอียด</a>
-                </div>
+        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+            <img src="{{ cow.image.url }}" class="w-full h-56 object-cover" alt="{{ cow.name }}">
+            <div class="p-4">
+                <h5 class="text-lg font-semibold text-gray-800">{{ cow.name }}</h5>
+                <p class="text-gray-600">พันธุ์: {{ cow.breed }}</p>
+                <p class="text-gray-600">อายุ: {{ cow.age }} ปี</p>
+                <a href="{% url 'cow_detail' cow.pk %}" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg block text-center mt-4 transition">
+                    ดูรายละเอียด
+                </a>
             </div>
         </div>
         {% empty %}
-        <p>ยังไม่มีลูกวัวในคอมมูนิตี้</p>
+        <p class="text-center text-gray-500 w-full">ยังไม่มีลูกวัวในคอมมูนิตี้</p>
         {% endfor %}
     </div>
 </div>

@@ -3,6 +3,7 @@ from .models import UserProfile
 from .forms import UserProfileForm
 from cows.models import Notification
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 def login_view(request):
     """แสดงหน้า Login"""
@@ -11,6 +12,12 @@ def login_view(request):
 def google_login_redirect(request):
     """Redirect ไปหน้า Google OAuth"""
     return redirect("/accounts/google/login/")
+
+def logout_view(request):
+    logout(request)
+    return redirect('community')
+    
+
 
 @login_required  
 def main_view(request):
