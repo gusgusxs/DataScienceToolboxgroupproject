@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import login_view, google_login_redirect
+from .views import google_login_redirect
 from .views import *  
 
 urlpatterns = [
