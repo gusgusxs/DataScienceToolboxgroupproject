@@ -17,6 +17,8 @@ class Cow(models.Model):
     image = models.ImageField(upload_to="cows/", blank=True, null=True)
     pedigree_file = models.FileField(upload_to="pedigree/", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    view_count = models.IntegerField(default=0)  # ตรวจสอบว่ามีฟิลด์นี้
+
     
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     buyer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="purchases")
