@@ -17,8 +17,6 @@ def logout_view(request):
     logout(request)
     return redirect('community')
     
-
-
 @login_required  
 def main_view(request):
     user = request.user  

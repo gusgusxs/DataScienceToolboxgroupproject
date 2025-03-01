@@ -1,4 +1,5 @@
 <script src="https://cdn.tailwindcss.com"></script>
+
 {% extends "base.html" %}
 
 {% block title %}🐄 วัวที่ฉันซื้อมา{% endblock %}
@@ -11,7 +12,11 @@
         {% for cow in cows %}
         <li class="bg-white shadow-lg rounded-lg p-4 flex items-center space-x-4">
             <div class="w-32 h-32 bg-gray-200 rounded-lg overflow-hidden">
+                {% if cow.image %}
                 <img src="{{ cow.image.url }}" alt="รูปของ {{ cow.name }}" class="w-full h-full object-cover">
+                {% else %}
+                <p class="text-center text-gray-500">❌ ไม่มีรูปภาพ</p>
+                {% endif %}
             </div>
             
             <div class="flex-1">
